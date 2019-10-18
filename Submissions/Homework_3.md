@@ -7,6 +7,7 @@ The gui should also be able to refill with a button push.
 You are able to refill the vending machine back up to 5 items at any time  
 There is a large bitcoin Symbol as a place holder for the QR code.  
 I did not implement a numberpad style input because I figured for testing purposses its easier to type it in  
+I added a Pay button to emulate a payment.  
 3)  By my next Homework I should have a Bitcoin node running on a Raspberry Pi  
 The node should be able to produce a payment request and tell when it has been fufilled.   
 If I can get the Bitcoin Node up and running sooner then expected then I will also attempt to send the payment request to the GUI  
