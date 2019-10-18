@@ -12,6 +12,12 @@ The node should be able to produce a payment request and tell when it has been f
 If I can get the Bitcoin Node up and running sooner then expected then I will also attempt to send the payment request to the GUI  
 4.  
 Here is what it looks when you start  
-![Starting](Screenshots/starting.png)
+![Starting](Screenshots/starting.png)  
+Here is what it looks like when you press Buy  
+![Buying](Screenshots/Buy.png)    
+Here is what it looks like when you press Pay  
+![Paying](Screenshots/Pay.png)   
+Here is what it looks like when you press Refill    
+![Refill](Screenshots/Refill.png)   
 
 
