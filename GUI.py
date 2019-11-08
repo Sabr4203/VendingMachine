@@ -49,7 +49,12 @@ def BuyItem():
                 # generate a bitcoin URI
                 request = "bitcoin:%s?amount=%s" % (adress, x["cost"])
                 # make a QR CODE
-                qr = qrcode.make(request, version=1)
+                
+                qr_gen = qrcode.QRCode(version = 1,box_size=5)
+                qr_gen.add_data(request)
+                qr_gen.make()
+                qr = qr_gen.make_image()
+                
 
                 qr.save("qr.png")
                 img = tk.PhotoImage(file="qr.png")
@@ -62,10 +67,8 @@ def BuyItem():
                 # below is a timer to allow upto 60 seconds until payment is dropped
                 start = time.time()
                 elapsed = 0
-                while elapsed < 20:
-                    if unconfirmed < float(
-                        rpc_connection.getunconfirmedbalance()
-                    ):  # check if we got any new transactions since displaying the QR
+                while elapsed < 10:
+                    if unconfirmed < float(rpc_connection.getunconfirmedbalance()):  # check if we got any new transactions since displaying the QR
                         x["stock"] = (
                             supply - 1
                         )  # if we have it do a payment and reduce supply
@@ -75,7 +78,10 @@ def BuyItem():
                             json.dump(stock, outfile, indent=4, sort_keys=True)
                         update()
                         break
-            else:
+                    elapsed = time.time() - start
+                update()
+                        
+            else:   
                 print("Sorry we are out")
 
 
@@ -108,16 +114,19 @@ def update():  # update the store front to reflect the JSON file
             slot += 1
 
     entry1.delete(0, "end")  # resets the entry bar
-    logo = tk.PhotoImage(file="Bitcoin.png")  # get rid of the QR
+    logo = tk.PhotoImage(file="Bitcoin.png").subsample(2,2)  # get rid of the QR
     QR_.config(image=logo)
     QR_.photo = logo
     QR_.grid(row=0, column=4)
     payment_adress.config(text="")
+    payment_adress.grid(row=1,column=4)
+    M.update()
 
 
 # initialize GUI
 
 M = tk.Tk()
+M.geometry("1000x600")
 M.title("Vending Machine")  # set title
 
 # Setting up ordering bar
@@ -160,7 +169,7 @@ buy.grid(row=0, column=2)
 
 refill = tk.Button(M, text="Refill", command=Refill).grid(row=0, column=3)
 # qr
-img = tk.PhotoImage(file="Bitcoin.png")
+img = tk.PhotoImage(file="Bitcoin.png").subsample(2,2)
 
 QR_ = tk.Label(M, image=img)
 QR_.photo = img
