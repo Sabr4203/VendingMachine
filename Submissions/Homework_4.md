@@ -5,7 +5,12 @@ If I can get the Bitcoin Node up and running sooner then expected then I will al
 3.)  For Homework 5 I am going to design a managerial system that will be able to give out sales reports and also request refills when it gets bellow a certain level and knows how much to order.  If this goes faster then expected then I will be working on making mutiple machines work on the same laptop and have the managerial system be able to handle it.  
 4.) Here is what it looks like right now  
 Starting  
-  
-After pressing buy QR code is dispaleyed with an embeded amount  
+![Start(2)](https://user-images.githubusercontent.com/46725794/68518536-8eceb100-0249-11ea-80ff-81b1ab3723f1.jpg)  
+
  
+After pressing buy QR code is displayed with an embeded amount and an address at the bottom to account for MTM Attacks 
+![Buy(2)](https://user-images.githubusercontent.com/46725794/68518525-86767600-0249-11ea-80f3-6945c35e6253.jpg)
+
+
 Pay  After you pay it will substract one from inventory and update back to the bitcoin logo
+![pay(2)](https://user-images.githubusercontent.com/46725794/68518533-8c6c5700-0249-11ea-9d42-5d4e4465b3f2.jpg)
