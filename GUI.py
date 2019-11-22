@@ -233,6 +233,11 @@ Machines = []
 for x in range(5):    
     Machines.append(VendingMachine(tk.Toplevel(root),x))
 order(Machines)
+'''
+TODO: finish managment system to account for total sales and also to clear wallet after a certain amount
+CURRENT ISSUES: can only interact with one vending machine at a time, also all of it is running off of one script would be better to split up so I can have mutplie at once
+'''
+
 root.mainloop()
 
 
