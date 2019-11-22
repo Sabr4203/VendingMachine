@@ -1,4 +1,5 @@
 import json
+import sys
 #I use this file to easily reset the json fies
 data = {}
 #First the drinks
@@ -76,6 +77,6 @@ data['Snacks'].append({
     'stock': '10',
     'slot': '12'
 })
-with open('Stock.txt','w') as outfile:
+with open('Stock_%s.txt' % (sys.argv[1]),'w') as outfile:
     json.dump(data, outfile, indent=4,sort_keys=True)
     
