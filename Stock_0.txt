@@ -4,37 +4,37 @@
             "cost": ".000011", 
             "name": "Pepsi", 
             "slot": "1", 
-            "stock": "10"
+            "stock": 2
         }, 
         {
             "cost": ".000012", 
             "name": "Mountain Dew", 
             "slot": "2", 
-            "stock": "10"
+            "stock": 6
         }, 
         {
             "cost": ".000013", 
             "name": "Root Beer", 
             "slot": "3", 
-            "stock": "10"
+            "stock": 5
         }, 
         {
             "cost": ".000014", 
             "name": "Sprite", 
             "slot": "4", 
-            "stock": "10"
+            "stock": 9
         }, 
         {
             "cost": ".0000135", 
             "name": "Starbucks Vanilla", 
             "slot": "5", 
-            "stock": "10"
+            "stock": 4
         }, 
         {
             "cost": ".000016", 
             "name": "Starbucks Mocha", 
             "slot": "6", 
-            "stock": "10"
+            "stock": 7
         }
     ], 
     "Snacks": [
@@ -42,37 +42,37 @@
             "cost": ".000017", 
             "name": "Cheetos", 
             "slot": "7", 
-            "stock": "10"
+            "stock": 10
         }, 
         {
             "cost": ".000018", 
             "name": "Dorritos", 
             "slot": "8", 
-            "stock": "10"
+            "stock": 1
         }, 
         {
             "cost": ".000019", 
             "name": "Poptart", 
             "slot": "9", 
-            "stock": "10"
+            "stock": 7
         }, 
         {
             "cost": ".000020", 
             "name": "Big Texas", 
             "slot": "10", 
-            "stock": "10"
+            "stock": 10
         }, 
         {
             "cost": ".000021", 
             "name": "Donut", 
             "slot": "11", 
-            "stock": "10"
+            "stock": 7
         }, 
         {
             "cost": ".000022", 
             "name": "Lays", 
             "slot": "12", 
-            "stock": "10"
+            "stock": 3
         }
     ]
 }
