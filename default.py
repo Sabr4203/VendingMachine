@@ -3,10 +3,11 @@ import sys
 #I use this file to easily reset the json fies
 data = {}
 #First the drinks
+price = float(sys.argv[2])
 data['Drinks'] = []
 data['Drinks'].append({
     'name': 'Pepsi',
-    'cost': '.000011',
+    'cost': '%.6f' % (1/price),
     'stock': '10',
     'slot': '1'
 })
