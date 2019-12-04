@@ -1,0 +1,22 @@
+{
+    "0": [
+        {
+            "Machine 0": [
+                {
+                    "amount": 1, 
+                    "name": "Sprite"
+                }
+            ]
+        }
+    ], 
+    "1": [
+        {
+            "Machine 1": [
+                {
+                    "amount": 1, 
+                    "name": "Cheetos"
+                }
+            ]
+        }
+    ]
+}

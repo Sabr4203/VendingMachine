@@ -1,8 +1,11 @@
+
+
 from sys import (
     version_info,
 )  # Found this fix online for me TKinter works but tkinter does not
 import random
 import requests
+
 
 if version_info.major == 2:
     # We are using Python 2.x
@@ -19,7 +22,7 @@ import qrcode  # to generate a QR
 import time  # to keep track of time
 import os  # currently using this to reset the store to a deafult with a python script
 
-seconds = 10  # time to pay for transaction
+seconds = 30  # time to pay for transaction
 number_of_machines = 2  # how many instances of machines we want
 BitcoinURL = "https://api.coinmarketcap.com/v1/ticker/bitcoin"
 
@@ -44,7 +47,7 @@ class VendingMachine:
         # initialize GUI
 
         self.M.geometry("1000x600")
-        self.M.title("Vending Machine")  # set title
+        self.M.title("Vending Machine %d" % (self.id))  # set title
 
         # Setting up ordering bar
         self.Label1 = tk.Label(self.M, text="Item You Want").grid(row=0)
@@ -53,14 +56,14 @@ class VendingMachine:
 
         # set up the stock display
 
-        with open("Stock_%s.txt" % (self.id)) as json_file:
+        with open("Stock_%s.json" % (self.id)) as json_file:
             stock = json.load(json_file)
             row_count = 1
             for d in stock["Drinks"]:  # cylce through all the drinks
-                label = "%s: %s cost:%s stock:%s" % (
+                label = "%s: %s BTC:%.6f stock:%s" % (
                     d["slot"],
                     d["name"],
-                    d["cost"],
+                    float(d["cost"])/self.price,
                     d["stock"],
                 )
                 drink = tk.Label(self.M, text=label)
@@ -69,10 +72,10 @@ class VendingMachine:
                 row_count += 1
             row_count = 1
             for s in stock["Snacks"]:  # cylce through all the snacks
-                label = "%s: %s cost:%s stock:%s" % (
+                label = "%s: %s BTC:%.6f stock:%s" % (
                     s["slot"],
                     s["name"],
-                    s["cost"],
+                    float(s["cost"])/self.price,
                     s["stock"],
                 )
                 snack = tk.Label(self.M, text=label)
@@ -103,7 +106,7 @@ class VendingMachine:
         )  # check our unconfirmed balance incase we have a transaction that has not gone through yet
 
         with open(
-            "Stock_%s.txt" % (self.id), "r"
+            "Stock_%s.json" % (self.id), "r"
         ) as json_file:  # load in stock from the store
             stock = json.load(json_file)
         slot = int(self.entry1.get())  # identify which slot was used
@@ -117,7 +120,7 @@ class VendingMachine:
                             self.rpc_connection.getnewaddress()
                         )  # get a new bitcoin address from the node
                         # generate a bitcoin URI
-                        request = "bitcoin:%s?amount=%s" % (adress, x["cost"])
+                        request = "bitcoin:%s?amount=%.6f" % (adress, float(x["cost"])/self.price)
                         # make a QR CODE
 
                         self.QR_gen = qrcode.QRCode(version=1, box_size=5)
@@ -137,19 +140,17 @@ class VendingMachine:
                         start = time.time()
                         elapsed = 0
                         while elapsed < seconds:
-                            if unconfirmed - float(
+                            if unconfirmed < float(
                                 self.rpc_connection.getunconfirmedbalance()
-                            ) == float(
-                                x["cost"]
                             ):  # check if we got any new transactions since displaying the QR
                                 x["stock"] = (
                                     supply - 1
                                 )  # if we have it do a payment and reduce supply
                                 with open(
-                                    "Stock_%s.txt" % (self.id), "w"
+                                    "Stock_%s.json" % (self.id), "w"
                                 ) as outfile:  # updat JSON to represent the store
                                     json.dump(stock, outfile, indent=4, sort_keys=True)
-                                self.sales += float(x["cost"])
+                                self.sales += float(x["cost"])/self.price
                                 self.update()
                                 break
                             elapsed = time.time() - start
@@ -159,11 +160,11 @@ class VendingMachine:
                         print("Sorry we are out")
 
     def Refill(self):  # calls python script to generate default store
-        os.system("python default.py %s %f" % (self.id, self.price))
+        os.system("python default.py %s" % (self.id))
         self.update()
 
     def update(self):  # update the store front to reflect the JSON file
-        with open("Stock_%s.txt" % (self.id)) as json_file:
+        with open("Stock_%s.json" % (self.id)) as json_file:
             slot = 1
             stock = json.load(json_file)
             for i in self.inventory:  # cycle through the inventory dispaly
@@ -172,12 +173,13 @@ class VendingMachine:
                     for x in stock[j]:
                         if int(x["slot"]) == slot:
 
-                            label = "%s: %s cost:%s stock:%s" % (
+                            label = "%s: %s BTC:%.6f stock:%s" % (
                                 x["slot"],
                                 x["name"],
-                                x["cost"],
+                                float(x["cost"]) / self.price,
                                 x["stock"],
                             )
+                            
                             i.config(text=label)
                 slot += 1
 
@@ -194,7 +196,7 @@ class VendingMachine:
         request = {}
         request["Machine %s" % (self.id)] = []
 
-        with open("Stock_%d.txt" % (self.id)) as json_file:
+        with open("Stock_%d.json" % (self.id)) as json_file:
             slot = 1
             stock = json.load(json_file)
         for d in stock["Drinks"]:
@@ -215,23 +217,22 @@ class VendingMachine:
         self,
     ):  # used to fake sales in testing faster than manually doing all the transactions
         with open(
-            "Stock_%s.txt" % (self.id), "r"
+            "Stock_%s.json" % (self.id), "r"
         ) as json_file:  # load in stock from the store
             stock = json.load(json_file)
         # will try to but random amounts of each item up to what we have
-        for d in stock["Drinks"]:
-            fake_sales = random.randrange(1, 10, 1)
-            if fake_sales <= int(d["stock"]):
-                self.sales += fake_sales * float(d["cost"])
+        for i in stock:
+            for x in stock[i]:
+              fake_sales = random.randrange(1, 10, 1)
+              if fake_sales <= int(x["stock"]):
+                self.sales += fake_sales * float(x["cost"])/self.price
 
-                d["stock"] = int(d["stock"]) - fake_sales
-        for s in stock["Snacks"]:
-            fake_sales = random.randrange(1, 10, 1)
-            if fake_sales <= int(s["stock"]):
-                self.sales += fake_sales * float(s["cost"])
-                s["stock"] = int(s["stock"]) - fake_sales
+                x["stock"] = int(x["stock"]) - fake_sales  
+
+
+        
         with open(
-            "Stock_%s.txt" % (self.id), "w"
+            "Stock_%s.json" % (self.id), "w"
         ) as outfile:  # updat JSON to represent the store
             json.dump(stock, outfile, indent=4, sort_keys=True)
         self.update()
@@ -257,6 +258,7 @@ class Manager:
             self.master, text="Price of Bitcoin %.2f" % (self.Price)
         )
         self.Price_tracker.pack()
+        
 
         self.labels = []
         for i in range(len(self.machines)):
@@ -281,8 +283,9 @@ class Manager:
             self.master, text="Refill all", command=self.Restock
         ).pack()
         self.update()
+        
 
-    def update(self):  # this loops to update to reflect all the machines
+    def update(self):  # this loops to update and reflect all the machines
         total = 0
         self.response = requests.get(BitcoinURL)
         self.response_json = self.response.json()
@@ -294,22 +297,25 @@ class Manager:
                 text="Machine_%d Sales in BTC: %f Sales in USD: %.2f"
                 % (i, self.machines[i].sales, self.machines[i].sales * self.Price)
             )
+            self.machines[i].price = self.Price
+            self.machines[i].update()
+        print(self.Price)
         self.Total.config(
             text="Total Sales BTC: %f USD: %.2f" % (total, self.Price * total)
         )
         self.master.update()
-        self.master.after(1000, self.update)
+        self.master.after(10000, self.update)
 
     def Restock(self):  # will refill all the machines
         for i in self.machines:
             i.Refill()
-
+    
     def order(self):  # used to make a refill order request
         refill_order = {}
         for i in range(len(self.machines)):
             refill_order[i] = []
             refill_order[i].append(self.machines[i].RefillRequest())
-        with open("RefillOrder.txt", "w") as outfile:
+        with open("RefillOrder.json", "w") as outfile:
             json.dump(refill_order, outfile, indent=4, sort_keys=True)
 
     def FakeSales(self):  # used to generate fake sales on each machine
