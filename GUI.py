@@ -61,10 +61,11 @@ class VendingMachine:
             stock = json.load(json_file)
             row_count = 1
             col_count = 0
-
+            half_way = len(stock)/2
+            
             for item in stock:
-                print(item["slot"])
-                if(row_count > 7):
+                
+                if(row_count > half_way):
                     row_count = 1
                     col_count = 1
                 label = "%s: %s BTC:%.6f stock:%s" % (
@@ -321,12 +322,11 @@ def main():
         Machines.append(VendingMachine(tk.Toplevel(root), x, Price))
 
     Managment = Manager(root, Machines)
-    """
-    TODO: finish to clear wallet after a certain amount,  Started to change json file to update with bitcoin Price
-    CURRENT ISSUES: can only interact with one vending machine at a time, also all of it is running off of one script would be better to split up so I can have mutplie at once
-    """
+    
 
     root.mainloop()
+
+
 if __name__ == '__main__':
     main()
 
