@@ -1,78 +1,74 @@
-{
-    "Drinks": [
-        {
-            "cost": "1", 
-            "name": "Pepsi", 
-            "slot": "1", 
-            "stock": "10"
-        }, 
-        {
-            "cost": "1", 
-            "name": "Mountain Dew", 
-            "slot": "2", 
-            "stock": "10"
-        }, 
-        {
-            "cost": "1", 
-            "name": "Root Beer", 
-            "slot": "3", 
-            "stock": "10"
-        }, 
-        {
-            "cost": "1", 
-            "name": "Sprite", 
-            "slot": "4", 
-            "stock": "10"
-        }, 
-        {
-            "cost": "2", 
-            "name": "Starbucks Vanilla", 
-            "slot": "5", 
-            "stock": "10"
-        }, 
-        {
-            "cost": "2", 
-            "name": "Starbucks Mocha", 
-            "slot": "6", 
-            "stock": "10"
-        }
-    ], 
-    "Snacks": [
-        {
-            "cost": "1", 
-            "name": "Cheetos", 
-            "slot": "7", 
-            "stock": "10"
-        }, 
-        {
-            "cost": "1", 
-            "name": "Dorritos", 
-            "slot": "8", 
-            "stock": "10"
-        }, 
-        {
-            "cost": "1", 
-            "name": "Poptart", 
-            "slot": "9", 
-            "stock": "10"
-        }, 
-        {
-            "cost": "1.5", 
-            "name": "Big Texas", 
-            "slot": "10", 
-            "stock": "10"
-        }, 
-        {
-            "cost": "1.5", 
-            "name": "Donuts", 
-            "slot": "11", 
-            "stock": "10"
-        }, 
-        {
-            "cost": "1", 
-            "name": "Lays", 
-            "slot": "12", 
-            "stock": "10"
-        }
-    ]
-}
+[
+    {
+        "cost": "1", 
+        "name": "Pepsi", 
+        "slot": "1", 
+        "stock": "10"
+    }, 
+    {
+        "cost": "1", 
+        "name": "Mountain Dew", 
+        "slot": "2", 
+        "stock": "10"
+    }, 
+    {
+        "cost": "1", 
+        "name": "Root Beer", 
+        "slot": "3", 
+        "stock": "10"
+    }, 
+    {
+        "cost": "1", 
+        "name": "Sprite", 
+        "slot": "4", 
+        "stock": "10"
+    }, 
+    {
+        "cost": "2", 
+        "name": "Starbucks Vanilla", 
+        "slot": "5", 
+        "stock": "10"
+    }, 
+    {
+        "cost": "2", 
+        "name": "Starbucks Mocha", 
+        "slot": "6", 
+        "stock": "10"
+    }, 
+    {
+        "cost": "1", 
+        "name": "Cheetos", 
+        "slot": "7", 
+        "stock": "10"
+    }, 
+    {
+        "cost": "1", 
+        "name": "Dorritos", 
+        "slot": "8", 
+        "stock": "10"
+    }, 
+    {
+        "cost": "1", 
+        "name": "Poptart", 
+        "slot": "9", 
+        "stock": "10"
+    }, 
+    {
+        "cost": "1.5", 
+        "name": "Big Texas", 
+        "slot": "10", 
+        "stock": "10"
+    }, 
+    {
+        "cost": "1.5", 
+        "name": "Donuts", 
+        "slot": "11", 
+        "stock": "10"
+    }, 
+    {
+        "cost": "1", 
+        "name": "Lays", 
+        "slot": "12", 
+        "stock": "10"
+    }
+]

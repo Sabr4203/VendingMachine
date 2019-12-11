@@ -59,29 +59,26 @@ class VendingMachine:
         with open("Stock_%s.json" % (self.id)) as json_file:
             stock = json.load(json_file)
             row_count = 1
-            for d in stock["Drinks"]:  # cylce through all the drinks
+            col_count = 0
+
+            for item in stock:
+                print(item["slot"])
+                if(row_count > 7):
+                    row_count = 1
+                    col_count = 1
                 label = "%s: %s BTC:%.6f stock:%s" % (
-                    d["slot"],
-                    d["name"],
-                    float(d["cost"])/self.price,
-                    d["stock"],
+                    item["slot"],
+                    item["name"],
+                    float(item["cost"])/self.price,
+                    item["stock"],
                 )
-                drink = tk.Label(self.M, text=label)
-                drink.grid(row=row_count, column=0)
-                self.inventory.append(drink)
-                row_count += 1
-            row_count = 1
-            for s in stock["Snacks"]:  # cylce through all the snacks
-                label = "%s: %s BTC:%.6f stock:%s" % (
-                    s["slot"],
-                    s["name"],
-                    float(s["cost"])/self.price,
-                    s["stock"],
-                )
-                snack = tk.Label(self.M, text=label)
-                snack.grid(row=row_count, column=1)
-                self.inventory.append(snack)
-                row_count += 1
+                item_ = tk.Label(self.M, text=label)
+                item_.grid(row=row_count, column=col_count)
+                self.inventory.append(item_)
+                row_count += 1    
+
+
+
 
         # set up buttons
         self.buy = tk.Button(self.M, text="Buy", command=self.BuyItem)
@@ -111,53 +108,53 @@ class VendingMachine:
             stock = json.load(json_file)
         slot = int(self.entry1.get())  # identify which slot was used
 
-        for i in stock:  # cycle through either drinks or snacks
-            for x in stock[i]:
-                if int(x["slot"]) == slot:  # search for by item type by its slot
-                    supply = int(x["stock"])  # check our supply of item
-                    if supply != 0:  # if we have items in stock
-                        adress = (
-                            self.rpc_connection.getnewaddress()
-                        )  # get a new bitcoin address from the node
-                        # generate a bitcoin URI
-                        request = "bitcoin:%s?amount=%.6f" % (adress, float(x["cost"])/self.price)
-                        # make a QR CODE
+          # cycle through either drinks or snacks
+        for x in stock:
+            if int(x["slot"]) == slot:  # search for by item type by its slot
+                supply = int(x["stock"])  # check our supply of item
+                if supply != 0:  # if we have items in stock
+                    adress = (
+                        self.rpc_connection.getnewaddress()
+                    )  # get a new bitcoin address from the node
+                    # generate a bitcoin URI
+                    request = "bitcoin:%s?amount=%.6f" % (adress, float(x["cost"])/self.price)
+                    # make a QR CODE
 
-                        self.QR_gen = qrcode.QRCode(version=1, box_size=5)
-                        self.QR_gen.add_data(request)
-                        self.QR_gen.make()
-                        qr = self.QR_gen.make_image()
+                    self.QR_gen = qrcode.QRCode(version=1, box_size=5)
+                    self.QR_gen.add_data(request)
+                    self.QR_gen.make()
+                    qr = self.QR_gen.make_image()
 
-                        qr.save("qr.png")
-                        img = tk.PhotoImage(file="qr.png")
-                        # add QR to GUI
-                        self.QR_.config(image=img)
-                        self.QR_.photo = img
-                        self.QR_.grid(row=0, column=4)
-                        self.payment_adress.config(text=adress)  # display address
-                        self.M.update()  # update to show qr code
-                        # below is a timer for an alloted time until payment is dropped
-                        start = time.time()
-                        elapsed = 0
-                        while elapsed < seconds:
-                            if unconfirmed < float(
-                                self.rpc_connection.getunconfirmedbalance()
-                            ):  # check if we got any new transactions since displaying the QR
-                                x["stock"] = (
-                                    supply - 1
-                                )  # if we have it do a payment and reduce supply
-                                with open(
-                                    "Stock_%s.json" % (self.id), "w"
-                                ) as outfile:  # updat JSON to represent the store
-                                    json.dump(stock, outfile, indent=4, sort_keys=True)
-                                self.sales += float(x["cost"])/self.price
-                                self.update()
-                                break
-                            elapsed = time.time() - start
-                        self.update()
+                    qr.save("qr.png")
+                    img = tk.PhotoImage(file="qr.png")
+                    # add QR to GUI
+                    self.QR_.config(image=img)
+                    self.QR_.photo = img
+                    self.QR_.grid(row=0, column=4)
+                    self.payment_adress.config(text=adress)  # display address
+                    self.M.update()  # update to show qr code
+                    # below is a timer for an alloted time until payment is dropped
+                    start = time.time()
+                    elapsed = 0
+                    while elapsed < seconds:
+                        if unconfirmed < float(
+                            self.rpc_connection.getunconfirmedbalance()
+                        ):  # check if we got any new transactions since displaying the QR
+                            x["stock"] = (
+                                supply - 1
+                            )  # if we have it do a payment and reduce supply
+                            with open(
+                                "Stock_%s.json" % (self.id), "w"
+                            ) as outfile:  # updat JSON to represent the store
+                                json.dump(stock, outfile, indent=4, sort_keys=True)
+                            self.sales += float(x["cost"])/self.price
+                            self.update()
+                            break
+                        elapsed = time.time() - start
+                    self.update()
 
-                    else:
-                        print("Sorry we are out")
+                else:
+                    print("Sorry we are out")
 
     def Refill(self):  # calls python script to generate default store
         os.system("python default.py %s" % (self.id))
@@ -169,18 +166,18 @@ class VendingMachine:
             stock = json.load(json_file)
             for i in self.inventory:  # cycle through the inventory dispaly
 
-                for j in stock:
-                    for x in stock[j]:
-                        if int(x["slot"]) == slot:
+                
+                for x in stock:
+                    if int(x["slot"]) == slot:
 
-                            label = "%s: %s BTC:%.6f stock:%s" % (
-                                x["slot"],
-                                x["name"],
-                                float(x["cost"]) / self.price,
-                                x["stock"],
-                            )
-                            
-                            i.config(text=label)
+                        label = "%s: %s BTC:%.6f stock:%s" % (
+                            x["slot"],
+                            x["name"],
+                            float(x["cost"]) / self.price,
+                            x["stock"],
+                        )
+                        
+                        i.config(text=label)
                 slot += 1
 
         self.entry1.delete(0, "end")  # resets the entry bar
@@ -199,41 +196,30 @@ class VendingMachine:
         with open("Stock_%d.json" % (self.id)) as json_file:
             slot = 1
             stock = json.load(json_file)
-        for d in stock["Drinks"]:
-            if int(d["stock"]) < 10:
-                i = 10 - int(d["stock"])
+        for item in stock:
+            if int(item["stock"] < 10 ):
+                i = 10 - int(item["stock"])
                 request["Machine %s" % (self.id)].append(
-                    {"name": str(d["name"]), "amount": i}
+                    {"name": str(item["name"]), "amount": i}
                 )
-        for s in stock["Snacks"]:
-            if int(s["stock"]) < 10:
-                i = 10 - int(s["stock"])
-                request["Machine %s" % (self.id)].append(
-                    {"name": str(s["name"]), "amount": i}
-                )
+
+        
         return request
 
-    def GenerateSales(
-        self,
-    ):  # used to fake sales in testing faster than manually doing all the transactions
-        with open(
-            "Stock_%s.json" % (self.id), "r"
-        ) as json_file:  # load in stock from the store
+    def GenerateSales(       self    ):  # used to fake sales in testing faster than manually doing all the transactions
+        with open("Stock_%s.json" % (self.id), "r") as json_file:  # load in stock from the store
             stock = json.load(json_file)
-        # will try to but random amounts of each item up to what we have
-        for i in stock:
-            for x in stock[i]:
-              fake_sales = random.randrange(1, 10, 1)
-              if fake_sales <= int(x["stock"]):
-                self.sales += fake_sales * float(x["cost"])/self.price
+            # will try to but random amounts of each item up to what we have        
+            for x in stock:
+                fake_sales = random.randrange(1, 10, 1)
+                if fake_sales <= int(x["stock"]):
+                    self.sales += fake_sales * float(x["cost"])/self.price
 
-                x["stock"] = int(x["stock"]) - fake_sales  
+                    x["stock"] = int(x["stock"]) - fake_sales  
 
 
         
-        with open(
-            "Stock_%s.json" % (self.id), "w"
-        ) as outfile:  # updat JSON to represent the store
+        with open("Stock_%s.json" % (self.id), "w") as outfile:  # updat JSON to represent the store
             json.dump(stock, outfile, indent=4, sort_keys=True)
         self.update()
 
