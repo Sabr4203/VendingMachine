@@ -5,6 +5,7 @@ from sys import (
 )  # Found this fix online for me TKinter works but tkinter does not
 import random
 import requests
+import default as RefillManager
 
 
 if version_info.major == 2:
@@ -157,7 +158,7 @@ class VendingMachine:
                     print("Sorry we are out")
 
     def Refill(self):  # calls python script to generate default store
-        os.system("python default.py %s" % (self.id))
+        RefillManager.Reffill(self.id)
         self.update()
 
     def update(self):  # update the store front to reflect the JSON file
@@ -308,21 +309,24 @@ class Manager:
         for i in self.machines:
             i.GenerateSales()
 
+def main():
 
-root = tk.Tk()
-response = requests.get(BitcoinURL)
-response_json = response.json()
-Price = float(response_json[0]["price_usd"])
+    root = tk.Tk()
+    response = requests.get(BitcoinURL)
+    response_json = response.json()
+    Price = float(response_json[0]["price_usd"])
 
-Machines = []
-for x in range(number_of_machines):
-    Machines.append(VendingMachine(tk.Toplevel(root), x, Price))
+    Machines = []
+    for x in range(number_of_machines):
+        Machines.append(VendingMachine(tk.Toplevel(root), x, Price))
 
-Managment = Manager(root, Machines)
-"""
-TODO: finish to clear wallet after a certain amount,  Started to change json file to update with bitcoin Price
-CURRENT ISSUES: can only interact with one vending machine at a time, also all of it is running off of one script would be better to split up so I can have mutplie at once
-"""
+    Managment = Manager(root, Machines)
+    """
+    TODO: finish to clear wallet after a certain amount,  Started to change json file to update with bitcoin Price
+    CURRENT ISSUES: can only interact with one vending machine at a time, also all of it is running off of one script would be better to split up so I can have mutplie at once
+    """
 
-root.mainloop()
+    root.mainloop()
+if __name__ == '__main__':
+    main()
 
