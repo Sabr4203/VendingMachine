@@ -3,11 +3,11 @@
         {
             "Machine 0": [
                 {
-                    "amount": 3, 
+                    "amount": 2, 
                     "name": "Pepsi"
                 }, 
                 {
-                    "amount": 7, 
+                    "amount": 4, 
                     "name": "Mountain Dew"
                 }, 
                 {
@@ -15,39 +15,39 @@
                     "name": "Root Beer"
                 }, 
                 {
-                    "amount": 7, 
+                    "amount": 3, 
                     "name": "Sprite"
                 }, 
                 {
-                    "amount": 4, 
+                    "amount": 3, 
                     "name": "Starbucks Vanilla"
                 }, 
                 {
-                    "amount": 4, 
+                    "amount": 9, 
                     "name": "Starbucks Mocha"
                 }, 
                 {
-                    "amount": 2, 
+                    "amount": 6, 
                     "name": "Cheetos"
                 }, 
                 {
-                    "amount": 8, 
+                    "amount": 7, 
                     "name": "Dorritos"
                 }, 
                 {
-                    "amount": 2, 
+                    "amount": 5, 
                     "name": "Poptart"
                 }, 
                 {
-                    "amount": 3, 
+                    "amount": 2, 
                     "name": "Big Texas"
                 }, 
                 {
-                    "amount": 8, 
+                    "amount": 7, 
                     "name": "Donuts"
                 }, 
                 {
-                    "amount": 4, 
+                    "amount": 2, 
                     "name": "Lays"
                 }
             ]
@@ -61,47 +61,47 @@
                     "name": "Pepsi"
                 }, 
                 {
-                    "amount": 1, 
+                    "amount": 4, 
                     "name": "Mountain Dew"
                 }, 
                 {
-                    "amount": 5, 
+                    "amount": 3, 
                     "name": "Root Beer"
                 }, 
                 {
-                    "amount": 4, 
+                    "amount": 7, 
                     "name": "Sprite"
                 }, 
                 {
-                    "amount": 4, 
+                    "amount": 1, 
                     "name": "Starbucks Vanilla"
                 }, 
                 {
-                    "amount": 2, 
+                    "amount": 1, 
                     "name": "Starbucks Mocha"
                 }, 
                 {
-                    "amount": 2, 
+                    "amount": 6, 
                     "name": "Cheetos"
                 }, 
                 {
-                    "amount": 6, 
+                    "amount": 4, 
                     "name": "Dorritos"
                 }, 
                 {
-                    "amount": 5, 
+                    "amount": 8, 
                     "name": "Poptart"
                 }, 
                 {
-                    "amount": 4, 
+                    "amount": 9, 
                     "name": "Big Texas"
                 }, 
                 {
-                    "amount": 7, 
+                    "amount": 9, 
                     "name": "Donuts"
                 }, 
                 {
-                    "amount": 3, 
+                    "amount": 1, 
                     "name": "Lays"
                 }
             ]

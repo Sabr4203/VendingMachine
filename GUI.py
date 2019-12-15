@@ -293,7 +293,7 @@ class Manager:
             text="Total Sales BTC: %f USD: %.2f" % (total, self.Price * total)
         )
         self.master.update()
-        self.master.after(1000, self.update)
+        self.master.after(10000, self.update)
 
     def Restock(self):  # will refill all the machines
         for i in self.machines:

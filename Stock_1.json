@@ -3,37 +3,37 @@
         "cost": "1", 
         "name": "Pepsi", 
         "slot": "1", 
-        "stock": 5
+        "stock": 3
     }, 
     {
         "cost": "1", 
         "name": "Mountain Dew", 
         "slot": "2", 
-        "stock": 0
+        "stock": 6
     }, 
     {
         "cost": "1", 
         "name": "Root Beer", 
         "slot": "3", 
-        "stock": 0
+        "stock": 7
     }, 
     {
         "cost": "1", 
         "name": "Sprite", 
         "slot": "4", 
-        "stock": 5
+        "stock": 3
     }, 
     {
         "cost": "2", 
         "name": "Starbucks Vanilla", 
         "slot": "5", 
-        "stock": 1
+        "stock": 9
     }, 
     {
         "cost": "2", 
         "name": "Starbucks Mocha", 
         "slot": "6", 
-        "stock": 7
+        "stock": 9
     }, 
     {
         "cost": "1", 
@@ -45,30 +45,30 @@
         "cost": "1", 
         "name": "Dorritos", 
         "slot": "8", 
-        "stock": 2
+        "stock": 6
     }, 
     {
         "cost": "1", 
         "name": "Poptart", 
         "slot": "9", 
-        "stock": 1
+        "stock": 2
     }, 
     {
         "cost": "1.5", 
         "name": "Big Texas", 
         "slot": "10", 
-        "stock": 2
+        "stock": 1
     }, 
     {
         "cost": "1.5", 
         "name": "Donuts", 
         "slot": "11", 
-        "stock": 3
+        "stock": 1
     }, 
     {
         "cost": "1", 
         "name": "Lays", 
         "slot": "12", 
-        "stock": 0
+        "stock": 9
     }
 ]
